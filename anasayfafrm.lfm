@@ -1,0 +1,61 @@
+object frmAnaSayfa: TfrmAnaSayfa
+  Left = 502
+  Height = 356
+  Top = 306
+  Width = 401
+  BorderIcons = [biSystemMenu, biMinimize]
+  Caption = 'DNS İstemci'
+  ClientHeight = 356
+  ClientWidth = 401
+  Position = poScreenCenter
+  object mmSonuc: TMemo
+    Left = 0
+    Height = 319
+    Top = 37
+    Width = 401
+    Align = alClient
+    ReadOnly = True
+    ScrollBars = ssAutoBoth
+    TabOrder = 0
+  end
+  object pnlSorgu: TPanel
+    Left = 0
+    Height = 37
+    Top = 0
+    Width = 401
+    Align = alTop
+    ClientHeight = 37
+    ClientWidth = 401
+    TabOrder = 1
+    object btnSorgu: TButton
+      Left = 314
+      Height = 25
+      Top = 4
+      Width = 75
+      Caption = 'Query'
+      TabOrder = 0
+      OnClick = btnSorguClick
+    end
+    object lblSorgu: TLabel
+      Left = 8
+      Height = 15
+      Top = 10
+      Width = 58
+      Caption = 'DNS Name'
+    end
+    object edtSorgu: TEdit
+      Left = 78
+      Height = 23
+      Top = 6
+      Width = 223
+      TabOrder = 1
+      Text = 'facebook.com'
+      OnKeyDown = edtSorguKeyDown
+    end
+  end
+  object IdUDPClient1: TIdUDPClient
+    Port = 0
+    Left = 104
+    Top = 112
+  end
+end

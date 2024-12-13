@@ -1,2 +1,8 @@
-# dnsi
-DNS İstemci
+# DNS İstemci
+
+---
+![main](dnsi.png)
+
+---
+
+Fatih KILIÇ - hs.fatih.kilic@gmail.com

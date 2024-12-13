@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
+    <BuildModes Active="Default"/>
+    <Units>
+      <Unit>
+        <Filename Value="dnsi.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos X="11" Y="11"/>
+        <UsageCount Value="48"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="anasayfafrm.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmAnaSayfa"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <UsageCount Value="48"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="paylasim.pp"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="2"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\paylasim.pas"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\paylasim.pas"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\o\paylasim.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="38"/>
+        <CursorPos X="27" Y="40"/>
+        <UsageCount Value="22"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\lazarus\components\Indy-Indy-10.6.3.3\Lib\Protocols\IdDNSResolver.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="280"/>
+        <CursorPos X="49" Y="290"/>
+        <UsageCount Value="12"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\lazarus\components\Indy-Indy-10.6.3.3\Lib\indylaz.pas"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="12"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\lazarus\components\Indy-Indy-10.6.3.3\Lib\System\IdGlobal.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="6558"/>
+        <CursorPos X="58" Y="2942"/>
+        <UsageCount Value="12"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\lazarus\components\Indy-Indy-10.6.3.3\Lib\Protocols\IdDNSCommon.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1107"/>
+        <CursorPos X="3" Y="1110"/>
+        <UsageCount Value="11"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\lazarus\components\Indy-Indy-10.6.3.3\Lib\System\IdStack.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1226"/>
+        <CursorPos X="20" Y="1244"/>
+        <UsageCount Value="11"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\lazarus\components\indy-10.2.0.3\fpc\IdDNSCommon.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1073"/>
+        <CursorPos X="3" Y="1076"/>
+        <UsageCount Value="12"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\lazarus\components\indy-10.2.0.3\fpc\IdDNSResolver.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1313"/>
+        <CursorPos X="62" Y="1311"/>
+        <UsageCount Value="12"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\lazarus40\components\indy-10.2.0.3\fpc\IdGlobal.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="763"/>
+        <CursorPos X="3" Y="780"/>
+        <UsageCount Value="12"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\lazarus40\components\indy-10.2.0.3\fpc\IdUDPClient.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="283"/>
+        <CursorPos X="3" Y="290"/>
+        <UsageCount Value="12"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\lazarus40\fpc\3.2.2\source\rtl\inc\systemh.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1176"/>
+        <CursorPos X="11" Y="1204"/>
+        <UsageCount Value="11"/>
+      </Unit>
+    </Units>
+    <JumpHistory HistoryIndex="29">
+      <Position>
+        <Filename Value="paylasim.pp"/>
+        <Caret Line="19" Column="16"/>
+      </Position>
+      <Position>
+        <Filename Value="paylasim.pp"/>
+        <Caret Line="40" Column="11" TopLine="16"/>
+      </Position>
+      <Position>
+        <Filename Value="paylasim.pp"/>
+        <Caret Line="41" Column="12" TopLine="16"/>
+      </Position>
+      <Position>
+        <Filename Value="paylasim.pp"/>
+        <Caret Line="43" Column="27" TopLine="16"/>
+      </Position>
+      <Position>
+        <Filename Value="paylasim.pp"/>
+        <Caret Line="50" Column="27" TopLine="47"/>
+      </Position>
+      <Position>
+        <Filename Value="paylasim.pp"/>
+        <Caret Line="52" Column="9" TopLine="35"/>
+      </Position>
+      <Position>
+        <Filename Value="paylasim.pp"/>
+        <Caret Line="53" Column="8" TopLine="35"/>
+      </Position>
+      <Position>
+        <Filename Value="paylasim.pp"/>
+        <Caret Line="54" Column="10" TopLine="35"/>
+      </Position>
+      <Position>
+        <Filename Value="paylasim.pp"/>
+        <Caret Line="50" Column="35" TopLine="35"/>
+      </Position>
+      <Position>
+        <Filename Value="paylasim.pp"/>
+        <Caret Line="43" Column="36" TopLine="26"/>
+      </Position>
+      <Position>
+        <Filename Value="paylasim.pp"/>
+        <Caret Line="79" Column="58" TopLine="48"/>
+      </Position>
+      <Position>
+        <Filename Value="anasayfafrm.pp"/>
+        <Caret Line="65" Column="11" TopLine="48"/>
+      </Position>
+      <Position>
+        <Filename Value="anasayfafrm.pp"/>
+        <Caret Line="66" Column="15" TopLine="48"/>
+      </Position>
+      <Position>
+        <Filename Value="anasayfafrm.pp"/>
+        <Caret Line="69" Column="24" TopLine="48"/>
+      </Position>
+      <Position>
+        <Filename Value="anasayfafrm.pp"/>
+        <Caret Line="70" Column="10" TopLine="48"/>
+      </Position>
+      <Position>
+        <Filename Value="anasayfafrm.pp"/>
+        <Caret Line="71" Column="12" TopLine="48"/>
+      </Position>
+      <Position>
+        <Filename Value="anasayfafrm.pp"/>
+        <Caret Line="148" Column="29" TopLine="133"/>
+      </Position>
+      <Position>
+        <Filename Value="anasayfafrm.pp"/>
+        <Caret Line="72" Column="25" TopLine="55"/>
+      </Position>
+      <Position>
+        <Filename Value="anasayfafrm.pp"/>
+        <Caret Line="146" Column="45" TopLine="119"/>
+      </Position>
+      <Position>
+        <Filename Value="anasayfafrm.pp"/>
+        <Caret Line="72" Column="34" TopLine="55"/>
+      </Position>
+      <Position>
+        <Filename Value="anasayfafrm.pp"/>
+        <Caret Line="147" Column="36" TopLine="120"/>
+      </Position>
+      <Position>
+        <Filename Value="anasayfafrm.pp"/>
+        <Caret Line="72" Column="46" TopLine="55"/>
+      </Position>
+      <Position>
+        <Filename Value="anasayfafrm.pp"/>
+        <Caret Line="70" Column="43" TopLine="55"/>
+      </Position>
+      <Position>
+        <Filename Value="anasayfafrm.pp"/>
+        <Caret Line="72" Column="46" TopLine="55"/>
+      </Position>
+      <Position>
+        <Filename Value="anasayfafrm.pp"/>
+        <Caret Line="176" Column="16" TopLine="149"/>
+      </Position>
+      <Position>
+        <Filename Value="anasayfafrm.pp"/>
+        <Caret Line="72" Column="66" TopLine="55"/>
+      </Position>
+      <Position>
+        <Filename Value="anasayfafrm.pp"/>
+        <Caret Line="73" Column="9" TopLine="55"/>
+      </Position>
+      <Position>
+        <Filename Value="anasayfafrm.pp"/>
+        <Caret Line="213" Column="56" TopLine="188"/>
+      </Position>
+      <Position>
+        <Filename Value="anasayfafrm.pp"/>
+        <Caret Line="220" Column="5" TopLine="187"/>
+      </Position>
+      <Position>
+        <Filename Value="anasayfafrm.pp"/>
+        <Caret Line="210" Column="50" TopLine="188"/>
+      </Position>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>
