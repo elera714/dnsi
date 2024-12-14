@@ -18,18 +18,23 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
-  IdComponent, IdGlobal, IdUDPClient;
+  Buttons, ComCtrls, IdComponent, IdGlobal, IdUDPClient;
 
 type
   TfrmAnaSayfa = class(TForm)
+    btnBilgi: TBitBtn;
     btnSorgu: TButton;
-    edtSorgu: TEdit;
-    IdUDPClient1: TIdUDPClient;
-    lblSorgu: TLabel;
+    edtDNSAdi: TEdit;
+    idUDPIstemci: TIdUDPClient;
+    lblDNSAdi: TLabel;
     mmSonuc: TMemo;
+    pnlBilgi: TPanel;
     pnlSorgu: TPanel;
+    sbDurum: TStatusBar;
+    procedure btnBilgiClick(Sender: TObject);
     procedure btnSorguClick(Sender: TObject);
-    procedure edtSorguKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure edtDNSAdiKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormShow(Sender: TObject);
   private
     procedure Sorgula(ADNSAdi: string);
   public
@@ -41,19 +46,37 @@ var
 implementation
 
 {$R *.lfm}
-uses IdDNSCommon, Sockets, paylasim, LCLType;
+uses IdDNSCommon, Sockets, paylasim, LCLType, sunucudegistirfrm;
 
 procedure TfrmAnaSayfa.btnSorguClick(Sender: TObject);
 begin
 
-  Sorgula(edtSorgu.Text);
+  Sorgula(edtDNSAdi.Text);
 end;
 
-procedure TfrmAnaSayfa.edtSorguKeyDown(Sender: TObject; var Key: Word;
+procedure TfrmAnaSayfa.btnBilgiClick(Sender: TObject);
+begin
+
+  if(frmSunucuDegistir.ShowModal = mrOK) then
+  begin
+
+    FormShow(Self);
+  end;
+end;
+
+procedure TfrmAnaSayfa.edtDNSAdiKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
 
   if(Key = VK_RETURN) then btnSorguClick(Self);
+end;
+
+procedure TfrmAnaSayfa.FormShow(Sender: TObject);
+begin
+
+  btnBilgi.Hint := Format('DNS Sunucusu: %s', [DNSSunucusu]);
+
+  edtDNSAdi.SetFocus;
 end;
 
 {
@@ -73,8 +96,12 @@ var
   DNSAdi: string;
 begin
 
+  sbDurum.SimpleText := Format('%s adresi sorgulanıyor...', [ADNSAdi]);
+  sbDurum.Repaint;
+
   mmSonuc.Lines.Add('');
-  mmSonuc.Lines.Add(edtSorgu.Text + ' adresi sorgulanıyor...');
+  mmSonuc.Lines.Add('');
+  mmSonuc.Lines.Add(Format('Sorgulanan DNS Adı: %s', [ADNSAdi]));
   mmSonuc.Lines.Add('---------------------------');
 
   SetLength(DNSBellek, 57 + Length(ADNSAdi) + 1);
@@ -130,11 +157,11 @@ begin
   Inc(PB2);
   PB2^ := Swap(DNS_SSINIF_IN);
 
-  IdUDPClient1.SendBuffer('192.168.1.1', DNS_PORTNO, DNSBellek);
+  idUDPIstemci.SendBuffer(DNSSunucusu, DNS_PORTNO, DNSBellek);
 
   SetLength(B, 1024);
 
-  i := IdUDPClient1.ReceiveBuffer(B, 2000);
+  i := idUDPIstemci.ReceiveBuffer(B, 2000);
 
   if(i > 0) then
   begin
@@ -215,6 +242,9 @@ begin
 
   SetLength(B, 0);
   SetLength(DNSBellek, 0);
+
+  sbDurum.SimpleText := '';
+  sbDurum.Repaint;
 end;
 
 end.

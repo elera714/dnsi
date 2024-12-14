@@ -2,17 +2,17 @@ object frmAnaSayfa: TfrmAnaSayfa
   Left = 502
   Height = 356
   Top = 306
-  Width = 401
-  BorderIcons = [biSystemMenu, biMinimize]
-  Caption = 'DNS İstemci'
+  Width = 451
+  Caption = 'DNS İstemcisi'
   ClientHeight = 356
-  ClientWidth = 401
-  Position = poScreenCenter
+  ClientWidth = 451
+  Position = poDesktopCenter
+  OnShow = FormShow
   object mmSonuc: TMemo
     Left = 0
-    Height = 319
+    Height = 296
     Top = 37
-    Width = 401
+    Width = 451
     Align = alClient
     ReadOnly = True
     ScrollBars = ssAutoBoth
@@ -22,38 +22,109 @@ object frmAnaSayfa: TfrmAnaSayfa
     Left = 0
     Height = 37
     Top = 0
-    Width = 401
+    Width = 451
     Align = alTop
     ClientHeight = 37
-    ClientWidth = 401
+    ClientWidth = 451
     TabOrder = 1
     object btnSorgu: TButton
-      Left = 314
-      Height = 25
+      Left = 328
+      Height = 26
       Top = 4
       Width = 75
-      Caption = 'Query'
+      Anchors = [akTop, akRight]
+      Caption = 'Sorgula'
       TabOrder = 0
       OnClick = btnSorguClick
     end
-    object lblSorgu: TLabel
+    object lblDNSAdi: TLabel
       Left = 8
       Height = 15
       Top = 10
-      Width = 58
-      Caption = 'DNS Name'
+      Width = 44
+      Caption = 'DNS Adı'
     end
-    object edtSorgu: TEdit
-      Left = 78
+    object edtDNSAdi: TEdit
+      AnchorSideLeft.Control = lblDNSAdi
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideRight.Control = btnSorgu
+      Left = 60
       Height = 23
       Top = 6
-      Width = 223
+      Width = 259
+      Anchors = [akTop, akLeft, akRight]
+      BorderSpacing.Left = 8
+      BorderSpacing.Right = 9
       TabOrder = 1
-      Text = 'facebook.com'
-      OnKeyDown = edtSorguKeyDown
+      Text = 'turkiye.gov.tr'
+      OnKeyDown = edtDNSAdiKeyDown
+    end
+    object pnlBilgi: TPanel
+      Left = 410
+      Height = 35
+      Top = 1
+      Width = 40
+      Align = alRight
+      ClientHeight = 35
+      ClientWidth = 40
+      TabOrder = 2
+      object btnBilgi: TBitBtn
+        Left = 6
+        Height = 26
+        Top = 3
+        Width = 26
+        Glyph.Data = {
+          36040000424D3604000000000000360000002800000010000000100000000100
+          2000000000000004000064000000640000000000000000000000FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00365EFF263A60FF80395FFFB3395FFFE6395FFFE6395F
+          FFB33A60FF80365EFF26FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF000000FF013462FF703562FFF63562FFFF3562FFFF3562FFFF3562FFFF3562
+          FFFF3562FFFF3562FFF63462FF700000FF01FFFFFF00FFFFFF00FFFFFF000000
+          FF013165FFB53166FFFF3166FFFF3166FFFF3166FFFF3166FFFF3166FFFF3166
+          FFFF3166FFFF3166FFFF3166FFFF3165FFB50000FF01FFFFFF00FFFFFF002E69
+          FF702E69FFFF2E69FFFF2E69FFFF2E69FFFF2E69FFFC2E69FFD82E69FFD82E69
+          FFFC2E69FFFF2E69FFFF2E69FFFF2E69FFFF2E69FF70FFFFFF00286BFF262B6D
+          FFF62A6DFFFF2A6DFFFF2A6DFFFF2A6DFFFF2A6DFFE62B6AFF182B6AFF182A6D
+          FFE62A6DFFFF2A6DFFFF2A6DFFFF2A6DFFFF2B6DFFF6286BFF262670FF802670
+          FFFF2670FFFF2670FFFF2670FFFF2670FFFF2670FFFF2570FF602570FF602670
+          FFFF2670FFFF2670FFFF2670FFFF2670FFFF2670FFFF2670FF7F2273FFB32274
+          FFFF2274FFFF2274FFFF2274FFFF2274FFFF2274FFFF2375FF602375FF602274
+          FFFF2274FFFF2274FFFF2274FFFF2274FFFF2274FFFF2273FFB31F77FFE61F77
+          FFFF1F77FFFF1F77FFFF1F77FFFF1F77FFFF1F77FFFF2078FF602078FF601F77
+          FFFF1F77FFFF1F77FFFF1F77FFFF1F77FFFF1F77FFFF1F77FFE61B7BFFE61B7B
+          FFFF1B7BFFFF1B7BFFFF1B7BFFFF1B7BFFFF1B7BFFFE1B7CFF421B7AFF601B7B
+          FFFF1B7BFFFF1B7BFFFF1B7BFFFF1B7BFFFF1B7BFFFF1B7BFFE6177DFFB3177E
+          FFFF177EFFFF177EFFFF177EFFFF177EFFFF177EFFE4167DFF68187DFFAD177E
+          FFFF177EFFFF177EFFFF177EFFFF177EFFFF177EFFFF177DFFB31481FF801382
+          FFFF1382FFFF1382FFFF1382FFFF1382FFFF1382FFFF1381FF881381FF881382
+          FFFF1382FFFF1382FFFF1382FFFF1382FFFF1382FFFF1283FF7F0D86FF261085
+          FFF61085FFFF1085FFFF1085FFFF1085FFFF1085FFFF1085FF301085FF301085
+          FFFF1085FFFF1085FFFF1085FFFF1085FFFF1085FFF60D86FF26FFFFFF000B89
+          FF700C89FFFF0C89FFFF0C89FFFF0C89FFFF0C89FFFF0C89FFF80C89FFF80C89
+          FFFF0C89FFFF0C89FFFF0C89FFFF0C89FFFF0B89FF70FFFFFF00FFFFFF0000FF
+          FF01088BFFB5088CFFFF088CFFFF088CFFFF088CFFFF088CFFFF088CFFFF088C
+          FFFF088CFFFF088CFFFF088CFFFF088BFFB500FFFF01FFFFFF00FFFFFF00FFFF
+          FF0000FFFF01058FFF700490FFF60490FFFF0490FFFF0490FFFF0490FFFF0490
+          FFFF0490FFFF0490FFF6058FFF7000FFFF01FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF000094FF260293FF800193FFB30193FFE60193FFE60193
+          FFB30293FF800094FF26FFFFFF00FFFFFF00FFFFFF00FFFFFF00
+        }
+        ParentShowHint = False
+        ShowHint = True
+        Spacing = 0
+        TabOrder = 0
+        OnClick = btnBilgiClick
+      end
     end
   end
-  object IdUDPClient1: TIdUDPClient
+  object sbDurum: TStatusBar
+    Left = 0
+    Height = 23
+    Top = 333
+    Width = 451
+    Panels = <>
+  end
+  object idUDPIstemci: TIdUDPClient
     Port = 0
     Left = 104
     Top = 112

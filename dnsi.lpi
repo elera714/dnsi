@@ -26,6 +26,9 @@
     </RunParams>
     <RequiredPackages>
       <Item>
+        <PackageName Value="AnchorDocking"/>
+      </Item>
+      <Item>
         <PackageName Value="indylaz"/>
       </Item>
       <Item>
@@ -47,6 +50,12 @@
       <Unit>
         <Filename Value="paylasim.pp"/>
         <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="sunucudegistirfrm.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmSunucuDegistir"/>
+        <ResourceBaseClass Value="Form"/>
       </Unit>
     </Units>
   </ProjectOptions>

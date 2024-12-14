@@ -6,6 +6,9 @@ interface
 
 uses Classes, SysUtils;
 
+var
+  DNSSunucusu: string = '192.168.1.1';
+
 const
   DNS_PORTNO = 53;
   TANIM_KIMLIK = 33455;

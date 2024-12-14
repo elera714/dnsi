@@ -10,7 +10,7 @@ uses
   athreads,
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, anasayfafrm;
+  Forms, anchordockpkg, anasayfafrm, sunucudegistirfrm;
 
 {$R *.res}
 
@@ -20,6 +20,7 @@ begin
   Application.Scaled:=True;
   Application.Initialize;
   Application.CreateForm(TfrmAnaSayfa, frmAnaSayfa);
+  Application.CreateForm(TfrmSunucuDegistir, frmSunucuDegistir);
   Application.Run;
 end.
 
