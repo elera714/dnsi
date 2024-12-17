@@ -16,7 +16,7 @@ uses
 
 begin
   RequireDerivedFormResource:=True;
-  Application.Title:='DNS İstamci';
+  Application.Title:='DNS İstamcisi';
   Application.Scaled:=True;
   Application.Initialize;
   Application.CreateForm(TfrmAnaSayfa, frmAnaSayfa);

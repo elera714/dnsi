@@ -7,6 +7,8 @@ object frmAnaSayfa: TfrmAnaSayfa
   ClientHeight = 356
   ClientWidth = 451
   Position = poDesktopCenter
+  LCLVersion = '4.0.0.1'
+  OnClose = FormClose
   OnShow = FormShow
   object mmSonuc: TMemo
     Left = 0
@@ -56,7 +58,7 @@ object frmAnaSayfa: TfrmAnaSayfa
       BorderSpacing.Left = 8
       BorderSpacing.Right = 9
       TabOrder = 1
-      Text = 'turkiye.gov.tr'
+      Text = 'www.turkiye.gov.tr'
       OnKeyDown = edtDNSAdiKeyDown
     end
     object pnlBilgi: TPanel
@@ -127,6 +129,14 @@ object frmAnaSayfa: TfrmAnaSayfa
   object idUDPIstemci: TIdUDPClient
     Port = 0
     Left = 104
+    Top = 112
+  end
+  object idDNSYanitlayici: TIdDNSResolver
+    QueryType = []
+    WaitingTime = 5000
+    AllowRecursiveQueries = True
+    IPVersion = Id_IPv4
+    Left = 176
     Top = 112
   end
 end

@@ -24,7 +24,7 @@ var
 implementation
 
 {$R *.lfm}
-uses paylasim, LCLType;
+uses islevler, LCLType;
 
 procedure TfrmSunucuDegistir.FormShow(Sender: TObject);
 begin

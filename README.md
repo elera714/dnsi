@@ -1,6 +1,5 @@
-# DNS İstemci
+# DNS İstemcisi
 
----
 ![main](dnsi.png)
 
 ---

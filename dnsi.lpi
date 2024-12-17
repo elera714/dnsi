@@ -5,7 +5,7 @@
     <PathDelim Value="\"/>
     <General>
       <SessionStorage Value="InProjectDir"/>
-      <Title Value="DNS İstamci"/>
+      <Title Value="DNS İstamcisi"/>
       <Scaled Value="True"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
@@ -48,7 +48,7 @@
         <ResourceBaseClass Value="Form"/>
       </Unit>
       <Unit>
-        <Filename Value="paylasim.pp"/>
+        <Filename Value="islevler.pp"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>

@@ -1,6 +1,6 @@
 {
 
-  Program Adı: DNS İstemci
+  Program Adı: DNS İstemcisi
   Program Exe Adı: dnsi.exe
   Kodlayan: Fatih KILIÇ
   Mail: hs.fatih.kilic@gmail.com
@@ -18,13 +18,14 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
-  Buttons, ComCtrls, IdComponent, IdGlobal, IdUDPClient;
+  Buttons, ComCtrls, IdComponent, IdGlobal, IdUDPClient, IdDNSResolver;
 
 type
   TfrmAnaSayfa = class(TForm)
     btnBilgi: TBitBtn;
     btnSorgu: TButton;
     edtDNSAdi: TEdit;
+    idDNSYanitlayici: TIdDNSResolver;
     idUDPIstemci: TIdUDPClient;
     lblDNSAdi: TLabel;
     mmSonuc: TMemo;
@@ -34,6 +35,7 @@ type
     procedure btnBilgiClick(Sender: TObject);
     procedure btnSorguClick(Sender: TObject);
     procedure edtDNSAdiKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormShow(Sender: TObject);
   private
     procedure Sorgula(ADNSAdi: string);
@@ -46,7 +48,24 @@ var
 implementation
 
 {$R *.lfm}
-uses IdDNSCommon, Sockets, paylasim, LCLType, sunucudegistirfrm;
+uses IdDNSCommon, Sockets, IdStack, islevler, LCLType, sunucudegistirfrm;
+
+procedure TfrmAnaSayfa.FormShow(Sender: TObject);
+begin
+
+  AyarDosyasiniOku;
+
+  btnBilgi.Hint := Format('DNS Sunucusu: %s', [DNSSunucusu]);
+
+  edtDNSAdi.SetFocus;
+end;
+
+procedure TfrmAnaSayfa.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+
+  // program çıkışında ayarları dosyaya kaydet
+  AyarDosyasinaYaz;
+end;
 
 procedure TfrmAnaSayfa.btnSorguClick(Sender: TObject);
 begin
@@ -60,7 +79,9 @@ begin
   if(frmSunucuDegistir.ShowModal = mrOK) then
   begin
 
-    FormShow(Self);
+    btnBilgi.Hint := Format('DNS Sunucusu: %s', [DNSSunucusu]);
+
+    edtDNSAdi.SetFocus;
   end;
 end;
 
@@ -71,177 +92,139 @@ begin
   if(Key = VK_RETURN) then btnSorguClick(Self);
 end;
 
-procedure TfrmAnaSayfa.FormShow(Sender: TObject);
-begin
-
-  btnBilgi.Hint := Format('DNS Sunucusu: %s', [DNSSunucusu]);
-
-  edtDNSAdi.SetFocus;
-end;
-
 {
   DNS sunucusuna sorgu gönderir
 }
 procedure TfrmAnaSayfa.Sorgula(ADNSAdi: string);
 var
-  DNSKayit: PDNSKayit;
-  PB1, PBellek: PByte;
-  PB2: PWord;
-  C: Char;
-  i, DNSAdresU, ToplamU, TTL, IP: LongWord;
-  BellekU, U: Byte;
-  DNSBellek, B: TIdBytes;
-  Tanimlayici, YanitSayisi, Bayrak, SorguTipi,
-  SorguSinifi, VeriU: Word;
-  DNSAdi: string;
+  DNSBaslik: TDNSHeader;
+  DNSSorgu, DNSYanit: TIdBytes;
+  SorguTipi, SorguSinifi: Word;
+  DNSAdi, s: string;
+  i: Integer;
 begin
 
   sbDurum.SimpleText := Format('%s adresi sorgulanıyor...', [ADNSAdi]);
   sbDurum.Repaint;
 
-  mmSonuc.Lines.Add('');
-  mmSonuc.Lines.Add('');
   mmSonuc.Lines.Add(Format('Sorgulanan DNS Adı: %s', [ADNSAdi]));
-  mmSonuc.Lines.Add('---------------------------');
+  mmSonuc.Lines.Add('Yanıt:');
 
-  SetLength(DNSBellek, 57 + Length(ADNSAdi) + 1);
+  // 12 bytelık başlık verisi
+  SetLength(DNSSorgu, 12);
+  CopyTIdWord(GStack.NetworkToHost(Word(TANIM_KIMLIK)), DNSSorgu, 0);
+  CopyTIdWord(GStack.NetworkToHost(Word($0100)), DNSSorgu, 2);         // standard sorgu, recursion
+  CopyTIdWord(GStack.NetworkToHost(Word(1)), DNSSorgu, 4);
+  CopyTIdWord(GStack.NetworkToHost(Word(0)), DNSSorgu, 6);
+  CopyTIdWord(GStack.NetworkToHost(Word(0)), DNSSorgu, 8);
+  CopyTIdWord(GStack.NetworkToHost(Word(0)), DNSSorgu, 10);
 
-  DNSKayit := PDNSKayit(@DNSBellek[0]);
-
-  // 12 bytelık veri
-	DNSKayit^.Tanimlayici := Swap(TANIM_KIMLIK);
-  DNSKayit^.Bayrak := Swap($0100);        // standard sorgu, recursion
-  DNSKayit^.SorguSayisi := Swap(1);       // 1 sorgu
-  DNSKayit^.YanitSayisi := Swap(0);
-  DNSKayit^.YetkiSayisi := Swap(0);
-  DNSKayit^.DigerSayisi := Swap(0);
-
-  PB1 := @DNSKayit^.Veriler;
-  PBellek := PB1;     // 1 byte veri uzunluk adresi
-  Inc(PB1);
-  BellekU := 0;
-  ToplamU := 0;
-
-  DNSAdresU := Length(ADNSAdi);
-  for i := 1 to DNSAdresU do
-  begin
-
-    C := ADNSAdi[i];
-
-    if(C = '.') then
-    begin
-
-      PBellek^ := BellekU;
-      PBellek := PB1;
-      ToplamU += BellekU + 1;
-      Inc(PB1);
-      BellekU := 0;
-    end
-    else
-    begin
-
-      PChar(PB1)^ := C;
-      Inc(PB1);
-      Inc(BellekU);
-    end;
+  // sorgulanması istenen DNS adı
+  DNSAdi := ADNSAdi;
+  while Length(DNSAdi) > 0 do begin
+    s := Fetch(DNSAdi, '.');
+    i := Length(s);
+    AppendByte(DNSSorgu, i);
+    AppendString(DNSSorgu, s, i);
   end;
-  PBellek^ := BellekU;
-  ToplamU += BellekU + 1;
+  AppendByte(DNSSorgu, 0);       // 0 sonlandırama
 
-  PB1^ := 0;        // sıfır sonlandırma
-  Inc(ToplamU);
+  // tip ve sınıf kodu
+  Ekle2Byte(DNSSorgu, TypeCode_A);
+  Ekle2Byte(DNSSorgu, Class_IN);
 
-  Inc(PB1);
-  PB2 := Pointer(PB1);
-  PB2^ := Swap(DNS_STIP_A);
-  Inc(PB2);
-  PB2^ := Swap(DNS_SSINIF_IN);
+  // hazırlanan sorgu verisini sunucuya gönder
+  idUDPIstemci.SendBuffer(DNSSunucusu, DNS_PORTNO, DNSSorgu);
 
-  idUDPIstemci.SendBuffer(DNSSunucusu, DNS_PORTNO, DNSBellek);
+  SetLength(DNSYanit, 512);
 
-  SetLength(B, 1024);
-
-  i := idUDPIstemci.ReceiveBuffer(B, 2000);
-
+  // sunucudan 2 saniye içerisinde yanıt bekle
+  i := idUDPIstemci.ReceiveBuffer(DNSYanit, 2 * 1000);
   if(i > 0) then
   begin
 
-    SetLength(B, i);
+    DNSBaslik := TDNSHeader.Create;
 
-    DNSKayit := PDNSKayit(B);
-    Tanimlayici := htons(DNSKayit^.Tanimlayici);
-    YanitSayisi := htons(DNSKayit^.YanitSayisi);
-    Bayrak := htons(DNSKayit^.Bayrak);
-
-    if(YanitSayisi = 1) and (Tanimlayici = TANIM_KIMLIK) then
+    if(DNSBaslik.ParseQuery(DNSYanit) = 0) then
     begin
 
-      mmSonuc.Lines.Add('Tanimlayici: ' + IntToHex(Tanimlayici));
-      mmSonuc.Lines.Add('Bayrak: ' + IntToHex(htons(DNSKayit^.Bayrak)));     // $8180
-      mmSonuc.Lines.Add('SorguSayisi: ' + IntToStr(htons(DNSKayit^.SorguSayisi)));
-      mmSonuc.Lines.Add('YanitSayisi: ' + IntToStr(YanitSayisi));
-      mmSonuc.Lines.Add('Bayrak: ' + IntToHex(Bayrak));
+      idDNSYanitlayici.ParseAnswers(DNSBaslik, DNSYanit);
 
-      DNSAdi := '';
-      PB1 := @DNSKayit^.Veriler;
-      while PB1^ <> 0 do
+      // yanıt sayı kontrolü
+      // şu aşamada tek bir yanıt içeren sorgu sonuçları değerlendiriliyor
+      { TODO - çoklu yanıtlar ileride eklenecek }
+      if(DNSBaslik.ANCount = 1) then
       begin
 
-        U := PB1^;
-        Inc(PB1);
-        for i := 1 to U do
+        // alınan mesaj bir yanıt mesajı ve
+        // alınan sorgu kimliği gönderilen sorgu kimliği ile aynı ise
+        if(DNSBaslik.BitCode = $8180) and (DNSBaslik.ID = TANIM_KIMLIK) then
         begin
 
-          DNSAdi +=  Char(PB1^);
-          Inc(PB1);
+          // mesaj tip ve sınıf kontrolü
+          SorguTipi := QueryRecordValues[Ord(idDNSYanitlayici.QueryResult.Items[0].RecType)];
+          SorguSinifi := idDNSYanitlayici.QueryResult.Items[0].RecClass;
+          if(SorguTipi = TypeCode_A) and (SorguSinifi = Class_IN) then
+          begin
+
+            mmSonuc.Lines.Add(Format('DNS Adı: %s', [idDNSYanitlayici.QueryResult.Items[0].Name]));
+            //mmSonuc.Lines.Add('RDataLength: ' + IntToStr(idDNSYanitlayici.QueryResult.Items[0].RDataLength));  veri uzunluğu = 4 (ip adresi için)
+            mmSonuc.Lines.Add(Format('IP Adresi: %s', [BytesToIPv4Str(idDNSYanitlayici.QueryResult.Items[0].RData)]));
+            mmSonuc.Lines.Add(Format('TTL: %d saniye', [idDNSYanitlayici.QueryResult.Items[0].TTL]));
+            mmSonuc.Lines.Add('---------------------------');
+          end
+          else
+          begin
+
+            mmSonuc.Lines.Add('Hata: mesaj sorgu tipi veya sorgu sınıf kodu çözümlenemiyor!');
+            mmSonuc.Lines.Add(Format('Sorgu Tipi: %d, Sorgu Sınıfı: %d', [SorguTipi, SorguSinifi]));
+            mmSonuc.Lines.Add('---------------------------');
+          end;
+        end
+        else
+        begin
+
+          mmSonuc.Lines.Add('Hata: yanıt mesajı veya tanım kimliği uyuşmuyor!');
+          mmSonuc.Lines.Add(Format('Yanıt Mesajı: %d, Tanım Kimliği: %d', [DNSBaslik.BitCode, DNSBaslik.ID]));
+          mmSonuc.Lines.Add('---------------------------');
         end;
+      end
+      else
+      begin
 
-        if(PB1^ <> 0) then DNSAdi += '.';
+        if(DNSBaslik.ANCount = 0) then
+        begin
+
+          mmSonuc.Lines.Add('Hata: DNS adı çözümlenemiyor!');
+          mmSonuc.Lines.Add('---------------------------');
+        end
+        else
+        begin
+
+          mmSonuc.Lines.Add('Hata: şu aşamada yalnızca tek bir yanıt desteklenmektedir!');
+          mmSonuc.Lines.Add(Format('Yanıt Sayısı: %d', [DNSBaslik.ANCount]));
+          mmSonuc.Lines.Add('---------------------------');
+        end;
       end;
-
-      Inc(PB1);
-      SorguTipi := PWord(PB1)^;
-      Inc(PB1, 2);
-      SorguSinifi := PWord(PB1)^;
-
-      mmSonuc.Lines.Add('DNSAdi: ' + DNSAdi);
-      mmSonuc.Lines.Add('SorguTipi: $' + IntToHex(SorguTipi));
-      mmSonuc.Lines.Add('SorguSinifi: $' + IntToHex(SorguSinifi));
-
-      Inc(PB1, 2 + 2);    // jump $c0 and $0c data
-      SorguTipi := PWord(PB1)^;
-      Inc(PB1, 2);
-      SorguSinifi := PWord(PB1)^;
-      mmSonuc.Lines.Add('SorguTipi: $' + IntToHex(SorguTipi));
-      mmSonuc.Lines.Add('SorguSinifi: $' + IntToHex(SorguSinifi));
-
-      Inc(PB1, 2);
-      TTL := htonl(PLongWord(PB1)^);
-      mmSonuc.Lines.Add('TTL: ' + IntToStr(TTL));
-
-      Inc(PB1, 4);
-      VeriU := htons(PWord(PB1)^);
-      mmSonuc.Lines.Add('VeriU: ' + IntToStr(VeriU));
-
-      Inc(PB1, 2);
-      IP := PLongWord(PB1)^;
-      mmSonuc.Lines.Add('IP Adresi: ' + IP_KarakterKatari(IP));
-
     end
     else
     begin
 
-      mmSonuc.Lines.Add('Hata: YanitSayisi: ' + IntToStr(YanitSayisi));
+      mmSonuc.Lines.Add('Hata: DNS adı çözümlenemiyor!');
+      mmSonuc.Lines.Add('---------------------------');
     end;
+
+    FreeAndNil(DNSBaslik);
   end
   else
   begin
 
     mmSonuc.Lines.Add('Hata: DNS adı çözümlenemiyor!');
+    mmSonuc.Lines.Add('---------------------------');
   end;
 
-  SetLength(B, 0);
-  SetLength(DNSBellek, 0);
+  SetLength(DNSYanit, 0);
+  SetLength(DNSSorgu, 0);
 
   sbDurum.SimpleText := '';
   sbDurum.Repaint;
