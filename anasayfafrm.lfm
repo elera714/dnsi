@@ -1,21 +1,23 @@
 object frmAnaSayfa: TfrmAnaSayfa
   Left = 502
-  Height = 356
+  Height = 461
   Top = 306
-  Width = 451
+  Width = 464
   Caption = 'DNS İstemcisi'
-  ClientHeight = 356
-  ClientWidth = 451
+  ClientHeight = 461
+  ClientWidth = 464
   Position = poDesktopCenter
   LCLVersion = '4.0.0.1'
   OnClose = FormClose
   OnShow = FormShow
   object mmSonuc: TMemo
     Left = 0
-    Height = 296
+    Height = 401
     Top = 37
-    Width = 451
+    Width = 464
     Align = alClient
+    Font.Height = -13
+    ParentFont = False
     ReadOnly = True
     ScrollBars = ssAutoBoth
     TabOrder = 0
@@ -24,13 +26,13 @@ object frmAnaSayfa: TfrmAnaSayfa
     Left = 0
     Height = 37
     Top = 0
-    Width = 451
+    Width = 464
     Align = alTop
     ClientHeight = 37
-    ClientWidth = 451
+    ClientWidth = 464
     TabOrder = 1
     object btnSorgu: TButton
-      Left = 328
+      Left = 341
       Height = 26
       Top = 4
       Width = 75
@@ -53,16 +55,15 @@ object frmAnaSayfa: TfrmAnaSayfa
       Left = 60
       Height = 23
       Top = 6
-      Width = 259
+      Width = 272
       Anchors = [akTop, akLeft, akRight]
       BorderSpacing.Left = 8
       BorderSpacing.Right = 9
       TabOrder = 1
-      Text = 'www.turkiye.gov.tr'
       OnKeyDown = edtDNSAdiKeyDown
     end
     object pnlBilgi: TPanel
-      Left = 410
+      Left = 423
       Height = 35
       Top = 1
       Width = 40
@@ -122,8 +123,8 @@ object frmAnaSayfa: TfrmAnaSayfa
   object sbDurum: TStatusBar
     Left = 0
     Height = 23
-    Top = 333
-    Width = 451
+    Top = 438
+    Width = 464
     Panels = <>
   end
   object idUDPIstemci: TIdUDPClient

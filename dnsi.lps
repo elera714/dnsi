@@ -10,7 +10,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="19" Y="24"/>
-        <UsageCount Value="57"/>
+        <UsageCount Value="62"/>
       </Unit>
       <Unit>
         <Filename Value="anasayfafrm.pp"/>
@@ -19,7 +19,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <UsageCount Value="57"/>
+        <CursorPos X="45" Y="20"/>
+        <UsageCount Value="62"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -27,8 +28,7 @@
         <Filename Value="islevler.pp"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="1"/>
-        <CursorPos Y="20"/>
-        <UsageCount Value="29"/>
+        <UsageCount Value="34"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -37,7 +37,7 @@
         <ComponentName Value="frmSunucuDegistir"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="28"/>
+        <UsageCount Value="33"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\paylasim.pas"/>
@@ -112,10 +112,9 @@
       <Unit>
         <Filename Value="C:\lazarus40\components\indy-10.2.0.3\fpc\IdGlobal.pas"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="957"/>
-        <CursorPos X="24" Y="982"/>
-        <UsageCount Value="14"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
+        <TopLine Value="1492"/>
+        <CursorPos X="32" Y="1521"/>
+        <UsageCount Value="16"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus40\components\indy-10.2.0.3\fpc\IdUDPClient.pas"/>
@@ -134,17 +133,14 @@
       <Unit>
         <Filename Value="C:\lazarus40\components\indy-10.2.0.3\fpc\IdDNSCommon.pas"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="580"/>
-        <CursorPos X="5" Y="314"/>
-        <UsageCount Value="12"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
+        <TopLine Value="823"/>
+        <CursorPos X="28" Y="852"/>
+        <UsageCount Value="14"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus40\components\indy-10.2.0.3\fpc\IdStack.pas"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="252"/>
-        <CursorPos X="27" Y="706"/>
-        <UsageCount Value="12"/>
+        <UsageCount Value="13"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
@@ -164,107 +160,61 @@
       <Unit>
         <Filename Value="C:\lazarus40\components\indy-10.2.0.3\fpc\IdDNSResolver.pas"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="226"/>
-        <CursorPos X="3" Y="243"/>
+        <TopLine Value="556"/>
+        <CursorPos X="24" Y="561"/>
+        <UsageCount Value="13"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\lazarus40\components\indy-10.2.0.3\fpc\IdDNSServer.pas"/>
+        <EditorIndex Value="-1"/>
         <UsageCount Value="11"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\lazarus40\components\indy-10.2.0.3\fpc\IdGlobalCore.pas"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="11"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\lazarus40\components\indy-10.2.0.3\fpc\IdURI.pas"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="11"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="23">
+    <JumpHistory HistoryIndex="8">
       <Position>
-        <Filename Value="anasayfafrm.pp"/>
-        <Caret Line="173" Column="24" TopLine="156"/>
-      </Position>
-      <Position>
-        <Filename Value="anasayfafrm.pp"/>
-        <Caret Line="182" TopLine="165"/>
-      </Position>
-      <Position>
-        <Filename Value="anasayfafrm.pp"/>
-        <Caret Line="110" Column="20" TopLine="96"/>
-      </Position>
-      <Position>
-        <Filename Value="anasayfafrm.pp"/>
-        <Caret Line="180" Column="32" TopLine="163"/>
-      </Position>
-      <Position>
-        <Filename Value="anasayfafrm.pp"/>
-        <Caret Line="113" Column="15" TopLine="94"/>
-      </Position>
-      <Position>
-        <Filename Value="anasayfafrm.pp"/>
-        <Caret Line="181" Column="18" TopLine="164"/>
-      </Position>
-      <Position>
-        <Filename Value="anasayfafrm.pp"/>
-        <Caret Line="179" TopLine="165"/>
-      </Position>
-      <Position>
-        <Filename Value="anasayfafrm.pp"/>
-        <Caret Line="110" Column="11" TopLine="92"/>
-      </Position>
-      <Position>
-        <Filename Value="anasayfafrm.pp"/>
-        <Caret Line="103" Column="19" TopLine="93"/>
+        <Filename Value="islevler.pp"/>
+        <Caret Line="29" Column="29" TopLine="9"/>
       </Position>
       <Position>
         <Filename Value="islevler.pp"/>
-        <Caret Line="20" TopLine="9"/>
+        <Caret Line="59" Column="8" TopLine="39"/>
       </Position>
       <Position>
         <Filename Value="islevler.pp"/>
-      </Position>
-      <Position>
-        <Filename Value="anasayfafrm.pp"/>
-        <Caret Line="103" TopLine="85"/>
-      </Position>
-      <Position>
-        <Filename Value="anasayfafrm.pp"/>
-        <Caret Line="105" TopLine="90"/>
-      </Position>
-      <Position>
-        <Filename Value="anasayfafrm.pp"/>
-        <Caret Line="167" Column="20" TopLine="149"/>
-      </Position>
-      <Position>
-        <Filename Value="anasayfafrm.pp"/>
-        <Caret Line="103" Column="12" TopLine="85"/>
-      </Position>
-      <Position>
-        <Filename Value="anasayfafrm.pp"/>
-        <Caret Line="186" Column="74" TopLine="167"/>
-      </Position>
-      <Position>
-        <Filename Value="anasayfafrm.pp"/>
-        <Caret Line="197" Column="5" TopLine="173"/>
-      </Position>
-      <Position>
-        <Filename Value="anasayfafrm.pp"/>
-        <Caret Line="173" Column="101" TopLine="150"/>
-      </Position>
-      <Position>
-        <Filename Value="anasayfafrm.pp"/>
-        <Caret Line="172" Column="118" TopLine="155"/>
-      </Position>
-      <Position>
-        <Filename Value="anasayfafrm.pp"/>
-        <Caret Line="173" Column="100" TopLine="156"/>
-      </Position>
-      <Position>
-        <Filename Value="anasayfafrm.pp"/>
-        <Caret Line="215" Column="53" TopLine="189"/>
-      </Position>
-      <Position>
-        <Filename Value="anasayfafrm.pp"/>
-        <Caret Line="23" Column="57"/>
+        <Caret Line="52" Column="3" TopLine="40"/>
       </Position>
       <Position>
         <Filename Value="islevler.pp"/>
-        <Caret Line="30" TopLine="19"/>
+        <Caret Line="60" Column="14" TopLine="42"/>
+      </Position>
+      <Position>
+        <Filename Value="islevler.pp"/>
+        <Caret Line="24" Column="68"/>
       </Position>
       <Position>
         <Filename Value="anasayfafrm.pp"/>
-        <Caret Line="27" Column="46"/>
+        <Caret Line="255" Column="67" TopLine="228"/>
+      </Position>
+      <Position>
+        <Filename Value="anasayfafrm.pp"/>
+      </Position>
+      <Position>
+        <Filename Value="anasayfafrm.pp"/>
+        <Caret Line="261" Column="5" TopLine="226"/>
+      </Position>
+      <Position>
+        <Filename Value="islevler.pp"/>
+        <Caret Line="65" Column="77" TopLine="45"/>
       </Position>
     </JumpHistory>
     <RunParams>

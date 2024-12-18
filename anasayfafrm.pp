@@ -55,6 +55,7 @@ begin
 
   AyarDosyasiniOku;
 
+  edtDNSAdi.Text := SorgulananSonDNSAdi;
   btnBilgi.Hint := Format('DNS Sunucusu: %s', [DNSSunucusu]);
 
   edtDNSAdi.SetFocus;
@@ -68,9 +69,22 @@ begin
 end;
 
 procedure TfrmAnaSayfa.btnSorguClick(Sender: TObject);
+var
+  DNSAdi: string;
 begin
 
-  Sorgula(edtDNSAdi.Text);
+  DNSAdi := Trim(edtDNSAdi.Text);
+  edtDNSAdi.Text := DNSAdi;
+
+  if(Length(DNSAdi) = 0) then
+  begin
+
+    ShowMessage('Hata: Lütfen sorgulanacak DNS adını giriniz!');
+    edtDNSAdi.SetFocus;
+    Exit;
+  end;
+
+  Sorgula(DNSAdi);
 end;
 
 procedure TfrmAnaSayfa.btnBilgiClick(Sender: TObject);
@@ -108,7 +122,7 @@ begin
   sbDurum.Repaint;
 
   mmSonuc.Lines.Add(Format('Sorgulanan DNS Adı: %s', [ADNSAdi]));
-  mmSonuc.Lines.Add('Yanıt:');
+  mmSonuc.Lines.Add('Yanıt:---------------------');
 
   // 12 bytelık başlık verisi
   SetLength(DNSSorgu, 12);
@@ -150,10 +164,8 @@ begin
 
       idDNSYanitlayici.ParseAnswers(DNSBaslik, DNSYanit);
 
-      // yanıt sayı kontrolü
-      // şu aşamada tek bir yanıt içeren sorgu sonuçları değerlendiriliyor
-      { TODO - çoklu yanıtlar ileride eklenecek }
-      if(DNSBaslik.ANCount = 1) then
+      // DNS sunucusu tarafından geri döndürülen yanıt sayısı
+      if(DNSBaslik.ANCount > 0) then
       begin
 
         // alınan mesaj bir yanıt mesajı ve
@@ -161,23 +173,51 @@ begin
         if(DNSBaslik.BitCode = $8180) and (DNSBaslik.ID = TANIM_KIMLIK) then
         begin
 
-          // mesaj tip ve sınıf kontrolü
-          SorguTipi := QueryRecordValues[Ord(idDNSYanitlayici.QueryResult.Items[0].RecType)];
-          SorguSinifi := idDNSYanitlayici.QueryResult.Items[0].RecClass;
-          if(SorguTipi = TypeCode_A) and (SorguSinifi = Class_IN) then
+          SorgulananSonDNSAdi := ADNSAdi;
+
+          for i := 0 to idDNSYanitlayici.QueryResult.Count - 1 do
           begin
 
-            mmSonuc.Lines.Add(Format('DNS Adı: %s', [idDNSYanitlayici.QueryResult.Items[0].Name]));
-            //mmSonuc.Lines.Add('RDataLength: ' + IntToStr(idDNSYanitlayici.QueryResult.Items[0].RDataLength));  veri uzunluğu = 4 (ip adresi için)
-            mmSonuc.Lines.Add(Format('IP Adresi: %s', [BytesToIPv4Str(idDNSYanitlayici.QueryResult.Items[0].RData)]));
-            mmSonuc.Lines.Add(Format('TTL: %d saniye', [idDNSYanitlayici.QueryResult.Items[0].TTL]));
-            mmSonuc.Lines.Add('---------------------------');
-          end
-          else
-          begin
+            // sıralı yanıt mesajı yalnızca 1den fazla yanıt olması durumunda görüntülenecek
+            if(idDNSYanitlayici.QueryResult.Count > 1) then
+              mmSonuc.Lines.Add(Format('%d. Yanıt', [i + 1]));
 
-            mmSonuc.Lines.Add('Hata: mesaj sorgu tipi veya sorgu sınıf kodu çözümlenemiyor!');
-            mmSonuc.Lines.Add(Format('Sorgu Tipi: %d, Sorgu Sınıfı: %d', [SorguTipi, SorguSinifi]));
+            // mesaj tip ve sınıf kontrolü
+            SorguTipi := QueryRecordValues[Ord(idDNSYanitlayici.QueryResult.Items[i].RecType)];
+            SorguSinifi := idDNSYanitlayici.QueryResult.Items[i].RecClass;
+            if(SorguSinifi = Class_IN) then
+            begin
+
+              if(SorguTipi = TypeCode_A) then
+              begin
+
+                mmSonuc.Lines.Add(Format('DNS Adı: %s', [idDNSYanitlayici.QueryResult.Items[i].Name]));
+                mmSonuc.Lines.Add(Format('IP Adresi: %s', [BytesToIPv4Str(idDNSYanitlayici.QueryResult.Items[i].RData)]));
+                mmSonuc.Lines.Add(Format('TTL: %d saniye', [idDNSYanitlayici.QueryResult.Items[i].TTL]));
+              end
+              else if(SorguTipi = TypeCode_CName) then
+              begin
+
+
+                mmSonuc.Lines.Add(Format('DNS Adı: %s', [idDNSYanitlayici.QueryResult.Items[i].Name]));
+                mmSonuc.Lines.Add(Format('CNAME: %s', [Byte2DNSAdi(idDNSYanitlayici.QueryResult.Items[i].RData,
+                  idDNSYanitlayici.QueryResult.Items[i].RDataLength)]));
+                mmSonuc.Lines.Add(Format('TTL: %d saniye', [idDNSYanitlayici.QueryResult.Items[i].TTL]));
+              end
+              else
+              begin
+
+                mmSonuc.Lines.Add('Hata: mesaj sorgu tipi çözümlenemiyor!');
+                mmSonuc.Lines.Add(Format('Sorgu Tipi: %d', [SorguTipi, SorguSinifi]));
+              end;
+            end
+            else
+            begin
+
+              mmSonuc.Lines.Add('Hata: sorgu sınıf kodu çözümlenemiyor!');
+              mmSonuc.Lines.Add(Format('Sorgu Sınıfı: %d', [SorguSinifi]));
+            end;
+
             mmSonuc.Lines.Add('---------------------------');
           end;
         end
@@ -192,19 +232,8 @@ begin
       else
       begin
 
-        if(DNSBaslik.ANCount = 0) then
-        begin
-
-          mmSonuc.Lines.Add('Hata: DNS adı çözümlenemiyor!');
-          mmSonuc.Lines.Add('---------------------------');
-        end
-        else
-        begin
-
-          mmSonuc.Lines.Add('Hata: şu aşamada yalnızca tek bir yanıt desteklenmektedir!');
-          mmSonuc.Lines.Add(Format('Yanıt Sayısı: %d', [DNSBaslik.ANCount]));
-          mmSonuc.Lines.Add('---------------------------');
-        end;
+        mmSonuc.Lines.Add('Hata: DNS adı çözümlenemiyor!');
+        mmSonuc.Lines.Add('---------------------------');
       end;
     end
     else
